@@ -19,5 +19,5 @@ adi_project_files wiphy_zed [list \
   "$ad_hdl_dir/library/xilinx/common/ad_iobuf.v" \
   "$ad_hdl_dir/projects/common/zed/zed_system_constr.xdc" ]
 
-#adi_project_run wiphy_zed
-#source $ad_hdl_dir/library/axi_ad9361/axi_ad9361_delay.tcl
+adi_project_run wiphy_zed
+source $ad_hdl_dir/library/axi_ad9361/axi_ad9361_delay.tcl
