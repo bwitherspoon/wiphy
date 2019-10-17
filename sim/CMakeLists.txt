@@ -1,0 +1,22 @@
+# Copyright 2019 Brett Witherspoon
+
+find_package(Boost REQUIRED COMPONENTS program_options)
+find_package(verilator HINTS $ENV{VERILATOR_ROOT})
+
+add_compile_options($<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:-Wall>)
+
+add_library(wiphy OBJECT preamble.cpp)
+target_compile_features(wiphy PUBLIC cxx_std_17)
+
+add_executable(wiphy-sim wiphy_sim.cpp wiphy.cpp $<TARGET_OBJECTS:wiphy>)
+set_target_properties(wiphy-sim PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
+target_compile_features(wiphy-sim PRIVATE cxx_std_17)
+target_link_libraries(wiphy-sim PRIVATE Boost::boost Boost::program_options)
+verilate(wiphy-sim
+    SOURCES
+        ${PROJECT_SOURCE_DIR}/src/wiphy.v
+    INCLUDE_DIRS
+	     ${PROJECT_SOURCE_DIR}/src
+    VERILATOR_ARGS
+      --assert --trace-fst
+)
