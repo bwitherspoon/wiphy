@@ -153,34 +153,44 @@ module synchronization (
     .m_data(frequency_data)
   );
 
-  logic [127:0] aligned_data;
+  logic combined_valid;
+  logic [127:0] combined_data;
 
   // Combine and align signals
-  combine #(.WIDTH(32), .COUNT(4)) align_combo (
+  combine #(.WIDTH(32), .COUNT(4)) signal_combo (
     .clk,
     .reset,
     .s_valid({magnitude_valid, frequency_valid, energy_valid, sample_mem_valid}),
     .s_ready({magnitude_ready, frequency_ready, energy_ready, sample_mem_ready}),
     .s_data({magnitude_data, frequency_data, energy_data, sample_mem_data}),
-    .m_valid,
+    .m_valid(combined_valid),
     .m_ready,
-    .m_data(aligned_data)
+    .m_data(combined_data)
   );
 
-  // Divide by two to roughly account for CORDIC gain of ~1.64676
-  wire signed [31:0] magnitude = $signed(aligned_data[127-:32]) >>> 1;
+  wire signed [31:0] energy = $signed(combined_data[63-:32]);
 
-  // Divide by sixteen to get average estimated frequency offset
-  wire signed [31:0] frequency = $signed(aligned_data[95-:32]) >>> 4;
+  logic baseband_valid;
 
-  wire signed [31:0] energy = $signed(aligned_data[63-:32]);
+  logic signed [15:0] inphase;
+  logic signed [15:0] quadrature;
+  logic signed [31:0] magnitude;
+  logic signed [31:0] frequency;
+  logic signed [31:0] threshold;
 
-  wire signed [15:0] inphase = $signed(aligned_data[15:0]);
-
-  wire signed [15:0] quadrature = $signed(aligned_data[31:16]);
-
-  // Trigger threshold of 75% of signal energy within window
-  wire signed [31:0] threshold = (energy >>> 2) + (energy >>> 1);
+  always_ff @ (posedge clk) begin
+    if (!m_valid || m_ready) begin
+      baseband_valid <= combined_valid;
+      inphase <= $signed(combined_data[15:0]);
+      quadrature <= $signed(combined_data[31:16]);
+      // Divide by two to roughly account for CORDIC gain of ~1.64676
+      magnitude <= $signed(combined_data[127-:32]) >>> 1;
+      // Divide by sixteen to get average estimated frequency offset
+      frequency <= $signed(combined_data[95-:32]) >>> 4;
+      // Trigger threshold of 75% of signal energy within window
+      threshold <= (energy >>> 1) + (energy >>> 2);
+    end
+  end
 
   logic [4:0] counter = '0;
 
@@ -221,6 +231,8 @@ module synchronization (
       m_last <= !bounce && timeout ? falling : 0;
     end
   end
+
+  assign m_valid = baseband_valid;
 
   assign m_user = frequency;
 
