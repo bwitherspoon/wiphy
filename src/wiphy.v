@@ -62,7 +62,7 @@ module wiphy (
 
   output wire irq
 );
-  logic [1:0] s_axi_aresetn = 2'b11;
+  reg [1:0] s_axi_aresetn = 2'b11;
 
   always @(posedge clk) begin
     s_axi_aresetn <= {s_axi_aresetn[0], ~reset};
