@@ -7,4 +7,5 @@ function(testbench TARGET)
   add_custom_target(${TARGET} COMMAND vvp -N ${TARGET}.vvp -fst DEPENDS ${TARGET}.vvp)
 endfunction()
 
-testbench(cartesian_to_polar ${CMAKE_CURRENT_SOURCE_DIR}/cartesian_to_polar_tb.sv)
+testbench(cartesian_to_polar_tb ${CMAKE_CURRENT_SOURCE_DIR}/cartesian_to_polar_tb.sv)
+testbench(wiphy_tb ${CMAKE_CURRENT_SOURCE_DIR}/wiphy_tb.sv)
