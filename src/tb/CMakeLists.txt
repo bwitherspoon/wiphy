@@ -8,5 +8,6 @@ function(testbench TARGET)
 endfunction()
 
 testbench(cartesian_to_polar_tb ${CMAKE_CURRENT_SOURCE_DIR}/cartesian_to_polar_tb.sv)
+testbench(complex_magnitude_squared_tb ${CMAKE_CURRENT_SOURCE_DIR}/complex_magnitude_squared_tb.sv)
 testbench(complex_multiply_tb ${CMAKE_CURRENT_SOURCE_DIR}/complex_multiply_tb.sv)
 testbench(wiphy_tb ${CMAKE_CURRENT_SOURCE_DIR}/wiphy_tb.sv)
