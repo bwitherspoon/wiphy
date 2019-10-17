@@ -19,4 +19,5 @@ set(WIPHY_SOURCES
   ${CMAKE_CURRENT_SOURCE_DIR}/wiphy.v
 )
 
+add_subdirectory(tb)
 add_subdirectory(zed)
