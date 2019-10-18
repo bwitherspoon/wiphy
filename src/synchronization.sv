@@ -160,34 +160,41 @@ module synchronization (
   combine #(.WIDTH(32), .COUNT(4)) signal_combo (
     .clk,
     .reset,
-    .s_valid({magnitude_valid, frequency_valid, energy_valid, sample_mem_valid}),
-    .s_ready({magnitude_ready, frequency_ready, energy_ready, sample_mem_ready}),
-    .s_data({magnitude_data, frequency_data, energy_data, sample_mem_data}),
+    .s_valid({energy_valid, magnitude_valid, frequency_valid, sample_mem_valid}),
+    .s_ready({energy_ready, magnitude_ready, frequency_ready, sample_mem_ready}),
+    .s_data({energy_data, magnitude_data, frequency_data, sample_mem_data}),
     .m_valid(combined_valid),
     .m_ready,
     .m_data(combined_data)
   );
 
-  wire signed [31:0] energy = $signed(combined_data[63-:32]);
+  wire signed [31:0] energy = $signed(combined_data[127-:32]);
+
+  logic signals_valid;
+  logic [95:0] signals;
 
   logic baseband_valid;
 
+  logic trigger;
+  logic signed [31:0] threshold;
   logic signed [15:0] inphase;
   logic signed [15:0] quadrature;
   logic signed [31:0] magnitude;
   logic signed [31:0] frequency;
-  logic signed [31:0] threshold;
 
   always_ff @ (posedge clk) begin
     if (!m_valid || m_ready) begin
-      baseband_valid <= combined_valid;
-      inphase <= $signed(combined_data[15:0]);
-      quadrature <= $signed(combined_data[31:16]);
-      magnitude <= $signed(combined_data[127-:32]);
-      // Divide by sixteen to get average estimated frequency offset
-      frequency <= $signed(combined_data[95-:32]) >>> 4;
+      signals_valid <= combined_valid;
+      baseband_valid <= signals_valid;
+      signals <= combined_data[95:0];
       // Trigger threshold of 75% of signal energy within window
       threshold <= (energy >>> 1) + (energy >>> 2);
+      inphase <= $signed(signals[15:0]);
+      quadrature <= $signed(signals[31:16]);
+      magnitude <= $signed(signals[95-:32]);
+      // Divide by sixteen to get average estimated frequency offset
+      frequency <= $signed(signals[63-:32]) >>> 4;
+      trigger <= magnitude > threshold;
     end
   end
 
@@ -196,8 +203,6 @@ module synchronization (
   logic previous = 0;
 
   logic detected = 0;
-
-  wire trigger = magnitude > threshold;
 
   wire bounce = previous ^ trigger;
 
