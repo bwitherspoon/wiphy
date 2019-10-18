@@ -30,6 +30,13 @@ import_files -force -norecurse -flat -fileset sources_1 [list \
 
 set_property "top" "wiphy" [get_fileset sources_1]
 
+import_files -force -norecurse -flat -fileset sim_1 [list "$src_dir/tb/wiphy_tb.sv"]
+
+update_compile_order -fileset sources_1
+update_compile_order -fileset sim_1
+
+launch_simulation
+
 ipx::package_project -root_dir . -vendor witherspoondesign.com -library user \
   -taxonomy /Witherspoon_Design
 set_property name wiphy [ipx::current_core]
