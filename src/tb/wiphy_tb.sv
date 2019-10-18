@@ -79,8 +79,10 @@ module wiphy_tb;
   wiphy dut (.*);
 
   initial begin
+`ifdef __ICARUS__
     $dumpfile("wiphy_tb.fst");
     $dumpvars(1, dut);
+`endif
 
     wait(~reset) @(posedge clk);
 
