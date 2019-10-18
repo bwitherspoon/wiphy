@@ -25,10 +25,12 @@ module rotate_tb;
   logic s_valid = 0;
   logic s_ready;
   logic [63:0] s_data;
+  logic s_last = 0;
 
   logic m_valid;
   logic m_ready = 1;
   logic [31:0] m_data;
+  logic m_last;
 
   rotate dut (.*);
 

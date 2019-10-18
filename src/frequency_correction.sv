@@ -14,7 +14,8 @@ module frequency_correction (
 
   output logic        m_valid,
   input  logic        m_ready,
-  output logic [31:0] m_data
+  output logic [31:0] m_data,
+  output logic        m_last
 );
   logic signed [31:0] frequency = '0;
   logic signed [31:0] phase = '0;
@@ -39,9 +40,11 @@ module frequency_correction (
     .s_valid,
     .s_ready,
     .s_data({phase, s_data}),
+    .s_last,
     .m_valid,
     .m_ready,
-    .m_data
+    .m_data,
+    .m_last
   );
 
 endmodule

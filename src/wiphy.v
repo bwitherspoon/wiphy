@@ -117,7 +117,8 @@ module wiphy (
     .s_last(sync_last),
     .m_valid(m_axis_tvalid),
     .m_ready(m_axis_tready),
-    .m_data()
+    .m_data(),
+    .m_last()
   );
 
 endmodule

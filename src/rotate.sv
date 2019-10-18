@@ -12,10 +12,12 @@ module rotate #(
   input  logic               s_valid,
   output logic               s_ready = 1,
   input  logic [4*WIDTH-1:0] s_data,
+  input  logic               s_last,
 
   output logic               m_valid = 0,
   input  logic               m_ready,
-  output logic [2*WIDTH-1:0] m_data
+  output logic [2*WIDTH-1:0] m_data,
+  output logic               m_last
 );
   typedef logic signed [WIDTH-1:0] amp_t;
   typedef logic signed [WIDTH+1:0] acc_t;
@@ -45,6 +47,18 @@ module rotate #(
       {m_valid, en} <= {en[$bits(en)-1:0], s_valid};
     end
   end
+
+  logic [DEPTH:0] last = '0;
+
+  always_ff @(posedge clk) begin
+    if (reset) begin
+      last <= '0;
+    end else if (!m_valid || m_ready) begin
+      last <= {last[$bits(last)-2:0], s_last};
+    end
+  end
+
+  assign m_last = last[$bits(last)-1];
 
   acc_t re [DEPTH + 1];
   acc_t im [DEPTH + 1];
