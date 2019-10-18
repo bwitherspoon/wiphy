@@ -87,16 +87,37 @@ module wiphy (
     .s_axi_rready(s_axi_rready)
   );
 
+  logic sync_valid;
+  logic sync_ready;
+  logic [31:0] sync_data;
+  logic [31:0] sync_freq;
+  logic sync_last;
+
   synchronization sync (
     .clk(clk),
     .reset(reset),
     .adc_valid(adc_valid_i0),
     .adc_data({adc_data_q0, adc_data_i0}),
+    .m_valid(sync_valid),
+    .m_ready(sync_ready),
+    .m_data(sync_data),
+    .m_user(sync_freq),
+    .m_last(sync_last)
+  );
+
+  assign irq = sync_last;
+
+  frequency_correction freq (
+    .clk(clk),
+    .reset(reset),
+    .s_valid(sync_valid),
+    .s_ready(sync_ready),
+    .s_data(sync_data),
+    .s_user(sync_freq),
+    .s_last(sync_last),
     .m_valid(m_axis_tvalid),
     .m_ready(m_axis_tready),
-    .m_user(),
-    .m_data(),
-    .m_last(irq)
+    .m_data()
   );
 
 endmodule

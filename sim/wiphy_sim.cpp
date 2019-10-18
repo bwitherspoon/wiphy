@@ -20,6 +20,7 @@ using namespace wiphy;
 namespace po = boost::program_options;
 
 int main(int argc, char *argv[]) {
+  using boost::math::float_constants::two_pi;
   using boost::math::float_constants::pi;
 
   float amp;
@@ -58,6 +59,16 @@ int main(int argc, char *argv[]) {
                                            preamble().end());
   samples[160] = 0;
   samples[192] = 0;
+
+  samples.insert(samples.end(), 128, 0);
+  {
+    auto phi = 0.0f;
+    for (auto i = preamble().size(); i < samples.size(); ++i) {
+      samples[i] = 0.05f * std::exp(std::complex<float>(0, phi));
+      phi = std::remainder(phi + two_pi / 24.0, two_pi);
+    }
+  }
+
   samples.insert(samples.begin(), cto, 0);
 
   Channel channel{snr, pi * cfo};
