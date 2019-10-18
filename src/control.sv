@@ -31,7 +31,11 @@ module control (
     input  logic        s_axi_rready
 );
     localparam OKAY = 2'd0;
-    localparam SIZE = 16;
+    localparam DEPTH = 16;
+
+    typedef logic [$clog2(DEPTH)-1:0] addr_t;
+    typedef logic [31:0] data_t;
+    typedef logic [3:0] strb_t;
 
     wire read_addr_valid = s_axi_arvalid | ~s_axi_arready;
     wire read_data_stall = s_axi_rvalid & ~s_axi_rready;
@@ -40,19 +44,19 @@ module control (
     wire write_data_valid = s_axi_wvalid | ~s_axi_wready;
     wire write_resp_stall = s_axi_bvalid & ~s_axi_bready;
 
-    logic [$clog2(SIZE)-1:0] raddr;
-    logic [$clog2(SIZE)-1:0] waddr;
+    addr_t raddr;
+    addr_t waddr;
 
-    logic [$clog2(SIZE)-1:0] raddr_buf;
-    logic [$clog2(SIZE)-1:0] waddr_buf;
+    addr_t raddr_buf;
+    addr_t waddr_buf;
 
-    logic [31:0] wdata;
-    logic [ 3:0] wstrb;
+    data_t wdata;
+    strb_t wstrb;
 
-    logic [31:0] wdata_buf;
-    logic [ 3:0] wstrb_buf;
+    data_t wdata_buf;
+    strb_t wstrb_buf;
 
-    logic [31:0] data [SIZE];
+    data_t data [DEPTH];
 
     assign s_axi_bresp = OKAY;
     assign s_axi_rresp = OKAY;
@@ -69,13 +73,13 @@ module control (
 
     always_ff @ (posedge s_axi_aclk) begin
         if (s_axi_arready) begin
-            raddr_buf <= s_axi_araddr[$bits(raddr_buf)-1:0];
+            raddr_buf <= addr_t'(s_axi_araddr);
         end
     end
 
     always_comb begin
         if (s_axi_arready) begin
-            raddr = s_axi_araddr[$bits(raddr)-1:0];
+            raddr = addr_t'(s_axi_araddr);
         end else begin
             raddr = raddr_buf;
         end
@@ -123,13 +127,13 @@ module control (
 
     always_ff @ (posedge s_axi_aclk) begin
         if (s_axi_awready) begin
-            waddr_buf <= s_axi_awaddr[$bits(waddr_buf)-1:0];
+            waddr_buf <= addr_t'(s_axi_awaddr);
         end
     end
 
     always_comb begin
         if (s_axi_awready) begin
-            waddr = s_axi_awaddr[$bits(waddr)-1:0];
+            waddr = addr_t'(s_axi_awaddr);
         end else begin
             waddr = waddr_buf;
         end
