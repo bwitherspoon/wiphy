@@ -23,14 +23,13 @@ module cartesian_to_polar #(
   localparam MIN = wide_t'(-2 ** ($bits(data_t) - 1));
   localparam MAX = wide_t'(+2 ** ($bits(data_t) - 1) - 1);
 
-  localparam PI_3_4 = data_t'(3) << WIDTH - 3;
-  localparam PI_4 = data_t'(1) << WIDTH - 3;
+  localparam PI_2 = data_t'(1) << WIDTH - 2;
 
   data_t lut [DEPTH];
 
   initial begin
     for (int n = 0; n < $size(lut); n++) begin
-      lut[n] = data_t'($atan($pow(2, $itor(-(n + 1)))) * $pow(2, $bits(data_t) - 1) / 3.1415926);
+      lut[n] = data_t'($atan($pow(2, $itor(-n))) * $pow(2, $bits(data_t) - 1) / 3.1415926);
     end
   end
 
@@ -56,25 +55,20 @@ module cartesian_to_polar #(
   always_ff @(posedge clk) begin
     if (s_valid && s_ready) begin
       unique case ({q[$bits(q) - 1], i[$bits(i) - 1]})
-        2'b00: begin
-          re[0] <= +wide_t'(q) + wide_t'(i);
-          im[0] <= -wide_t'(i) + wide_t'(q);
-          ph[0] <= +PI_4;
+        2'b00, 2'b10: begin
+          re[0] <= wide_t'(i);
+          im[0] <= wide_t'(q);
+          ph[0] <= '0;
         end
         2'b01: begin
-          re[0] <= +wide_t'(q) - wide_t'(i);
-          im[0] <= -wide_t'(i) - wide_t'(q);
-          ph[0] <= +PI_3_4;
-        end
-        2'b10: begin
-          re[0] <= -wide_t'(q) + wide_t'(i);
-          im[0] <= +wide_t'(i) + wide_t'(q);
-          ph[0] <= -PI_4;
+          re[0] <= wide_t'(q);
+          im[0] <= -wide_t'(i);
+          ph[0] <= PI_2;
         end
         2'b11: begin
-          re[0] <= -wide_t'(q) - wide_t'(i);
-          im[0] <= +wide_t'(i) - wide_t'(q);
-          ph[0] <= -PI_3_4;
+          re[0] <= -wide_t'(q);
+          im[0] <= wide_t'(i);
+          ph[0] <= -PI_2;
         end
       endcase
     end
@@ -85,12 +79,12 @@ module cartesian_to_polar #(
     always_ff @(posedge clk) begin
       if (!m_valid || m_ready) begin
         if (im[n - 1][$bits(im[n - 1]) - 1]) begin
-          re[n] <= re[n - 1] - (im[n - 1] >>> n);
-          im[n] <= im[n - 1] + (re[n - 1] >>> n);
+          re[n] <= re[n - 1] - (im[n - 1] >>> (n - 1));
+          im[n] <= im[n - 1] + (re[n - 1] >>> (n - 1));
           ph[n] <= ph[n - 1] - lut[n - 1];
         end else begin
-          re[n] <= re[n - 1] + (im[n - 1] >>> n);
-          im[n] <= im[n - 1] - (re[n - 1] >>> n);
+          re[n] <= re[n - 1] + (im[n - 1] >>> (n - 1));
+          im[n] <= im[n - 1] - (re[n - 1] >>> (n - 1));
           ph[n] <= ph[n - 1] + lut[n - 1];
         end
       end
