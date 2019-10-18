@@ -14,7 +14,7 @@ module rotate #(
   input  logic [4*WIDTH-1:0] s_data,
   input  logic               s_last,
 
-  output logic               m_valid = 0,
+  output logic               m_valid,
   input  logic               m_ready,
   output logic [2*WIDTH-1:0] m_data,
   output logic               m_last
