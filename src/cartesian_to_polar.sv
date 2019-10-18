@@ -62,11 +62,11 @@ module cartesian_to_polar #(
         end
         2'b01: begin
           re[0] <= wide_t'(q);
-          im[0] <= -wide_t'(i);
+          im[0] <= wide_t'(-i);
           ph[0] <= PI_2;
         end
         2'b11: begin
-          re[0] <= -wide_t'(q);
+          re[0] <= wide_t'(-q);
           im[0] <= wide_t'(i);
           ph[0] <= -PI_2;
         end
