@@ -18,7 +18,7 @@ module cartesian_to_polar #(
   output logic [2*WIDTH-1:0] m_data
 );
   typedef logic signed [WIDTH-1:0] data_t;
-  typedef logic signed [$clog2(DEPTH)+WIDTH-1:0] wide_t;
+  typedef logic signed [WIDTH+1:0] wide_t;
 
   localparam MIN = wide_t'(-2 ** ($bits(data_t) - 1));
   localparam MAX = wide_t'(+2 ** ($bits(data_t) - 1) - 1);
