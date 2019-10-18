@@ -87,11 +87,11 @@ module wiphy (
     .s_axi_rready(s_axi_rready)
   );
 
-  logic sync_valid;
-  logic sync_ready;
-  logic [31:0] sync_data;
-  logic [31:0] sync_freq;
-  logic sync_last;
+  wire sync_valid;
+  wire sync_ready;
+  wire [31:0] sync_data;
+  wire [31:0] sync_freq;
+  wire sync_last;
 
   synchronization sync (
     .clk(clk),
