@@ -91,7 +91,8 @@ module cartesian_to_polar #(
     end
   end
 
-  assign m_data = {re[$size(re) - 1][WIDTH-1:0], ph[$size(ph) - 1]};
+  // CORDIC gain of ~1.64676 / 2
+  assign m_data = {re[$size(re) - 1][WIDTH:1], ph[$size(ph) - 1]};
 
   always_comb s_ready = m_ready;
 

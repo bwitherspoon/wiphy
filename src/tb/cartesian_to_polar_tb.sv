@@ -72,7 +72,7 @@ module cartesian_to_polar_tb;
   initial begin
     for (int n = 0; n < N; n++) begin
       do @(posedge clk); while (m_valid !== 1);
-      magnitude = 0.607252935 * float(m_data[63:32], 15);
+      magnitude = 2 * 0.607252935 * float(m_data[63:32], 15);
       phase = float(m_data[31:0], 31);
       $display("%0d: Magnitude: %f, Phase: %f, ", n, magnitude, phase);
       assert (int'(magnitude) == int'(1.0 / (1 + n))) else begin
@@ -82,7 +82,7 @@ module cartesian_to_polar_tb;
 
     for (int n = 0; n < N; n++) begin
       do @(posedge clk); while (m_valid !== 1);
-      magnitude = 0.607252935 * float(m_data[63:32], 15);
+      magnitude = 2 * 0.607252935 * float(m_data[63:32], 15);
       phase = float(m_data[31:0], 31);
       $display("%0d: Magnitude: %f, Phase: %f, ", n, magnitude, phase);
       assert (int'(magnitude) == int'($pow(2, 15) / (1 + n))) else begin

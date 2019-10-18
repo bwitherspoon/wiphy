@@ -183,8 +183,7 @@ module synchronization (
       baseband_valid <= combined_valid;
       inphase <= $signed(combined_data[15:0]);
       quadrature <= $signed(combined_data[31:16]);
-      // Divide by two to roughly account for CORDIC gain of ~1.64676
-      magnitude <= $signed(combined_data[127-:32]) >>> 1;
+      magnitude <= $signed(combined_data[127-:32]);
       // Divide by sixteen to get average estimated frequency offset
       frequency <= $signed(combined_data[95-:32]) >>> 4;
       // Trigger threshold of 75% of signal energy within window
