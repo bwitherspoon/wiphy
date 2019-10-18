@@ -18,7 +18,9 @@ import_files -force -norecurse -flat -fileset sources_1 [list \
   "$src_dir/complex_multiply.sv" \
   "$src_dir/complex_saturate.sv" \
   "$src_dir/control.sv" \
+  "$src_dir/frequency_correction.sv" \
   "$src_dir/moving_sumation.sv" \
+  "$src_dir/rotate.sv" \
   "$src_dir/saturate.sv" \
   "$src_dir/shift_register_memory.sv" \
   "$src_dir/synchronization.sv" \
