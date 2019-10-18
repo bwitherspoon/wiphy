@@ -13,10 +13,8 @@ set_target_properties(wiphy-sim PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BI
 target_compile_features(wiphy-sim PRIVATE cxx_std_17)
 target_link_libraries(wiphy-sim PRIVATE Boost::boost Boost::program_options)
 verilate(wiphy-sim
-    SOURCES
-        ${PROJECT_SOURCE_DIR}/src/wiphy.v
-    INCLUDE_DIRS
-	     ${PROJECT_SOURCE_DIR}/src
-    VERILATOR_ARGS
-      --assert --trace-fst
+    SOURCES ${PROJECT_SOURCE_DIR}/src/wiphy.v
+    INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/src
+    TRACE_FST
+    VERILATOR_ARGS --assert
 )
