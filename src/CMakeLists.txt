@@ -13,6 +13,7 @@ set(WIPHY_SOURCES
   ${CMAKE_CURRENT_SOURCE_DIR}/control.sv
   ${CMAKE_CURRENT_SOURCE_DIR}/memory.sv
   ${CMAKE_CURRENT_SOURCE_DIR}/moving_sumation.sv
+  ${CMAKE_CURRENT_SOURCE_DIR}/rotate.sv
   ${CMAKE_CURRENT_SOURCE_DIR}/saturate.sv
   ${CMAKE_CURRENT_SOURCE_DIR}/shift_register_memory.sv
   ${CMAKE_CURRENT_SOURCE_DIR}/synchronization.sv
