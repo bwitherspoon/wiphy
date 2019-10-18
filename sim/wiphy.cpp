@@ -27,6 +27,7 @@ Wiphy::Wiphy() : core_{std::make_unique<Vwiphy>()} {
   core_->m_axis_tready = 1;
 
   core_->s_axi_aclk = 0;
+  core_->s_axi_aresetn = 1;
   core_->s_axi_awvalid = 0;
   core_->s_axi_wvalid = 0;
   core_->s_axi_bready = 1;
@@ -86,12 +87,14 @@ void Wiphy::cycle() {
 
 void Wiphy::reset(int count) {
   core_->reset = 1;
+  core_->s_axi_aresetn = 0;
 
   for (int i = 0; i < count; ++i) {
     cycle();
   }
 
   core_->reset = 0;
+  core_->s_axi_aresetn = 1;
 }
 
 void Wiphy::receive(const std::complex<float> &sample) {
