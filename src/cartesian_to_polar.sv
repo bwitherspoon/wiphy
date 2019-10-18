@@ -83,7 +83,7 @@ module cartesian_to_polar #(
   genvar n;
   for (n = 1; n < DEPTH + 1; n = n + 1) begin
     always_ff @(posedge clk) begin
-      if (m_ready) begin
+      if (!m_valid || m_ready) begin
         if (im[n - 1][$bits(im[n - 1]) - 1]) begin
           re[n] <= re[n - 1] - (im[n - 1] >>> n);
           im[n] <= im[n - 1] + (re[n - 1] >>> n);
