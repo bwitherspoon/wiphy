@@ -18,6 +18,12 @@ module wiphy_tb;
     @(negedge clk) reset = 0;
   end
 
+  logic s_axi_aresetn = 0;
+  initial begin
+    repeat (2) @(posedge s_axi_aclk);
+    @(negedge s_axi_aclk) s_axi_aresetn = 0;
+  end
+
   logic s_axi_awvalid;
   logic [15:0] s_axi_awaddr;
   logic [2:0] s_axi_awprot;
