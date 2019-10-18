@@ -5,6 +5,7 @@
 #include <iostream>
 #include <complex>
 #include <vector>
+#include <string>
 
 #include <boost/math/constants/constants.hpp>
 #include <boost/program_options.hpp>
@@ -25,6 +26,7 @@ int main(int argc, char *argv[]) {
   float snr;
   float cfo;
   int cto;
+  std::string fst;
 
   po::options_description opts("Options");
   // clang-format off
@@ -33,6 +35,7 @@ int main(int argc, char *argv[]) {
     ("amp", po::value(&amp)->default_value(1.0), "set the signal amplitude")
     ("cfo", po::value(&cfo)->default_value(1.0 / 32.0), "set the carrier frequency offset")
     ("cto", po::value(&cto)->default_value(64), "set the carrier timing offset")
+    ("fst", po::value(&fst), "set the trace output filename")
     ("snr", po::value(&snr)->default_value(40), "set the signal to noise ratio")
   ;
   // clang-format on
@@ -47,10 +50,14 @@ int main(int argc, char *argv[]) {
 
   const auto core = std::make_unique<Wiphy>();
 
-  core->trace("wiphy.fst");
+  if (vm.count("fst")) {
+    core->trace(fst.c_str());
+  }
 
   std::vector<std::complex<float>> samples(preamble().begin(),
                                            preamble().end());
+  samples[160] = 0;
+  samples[192] = 0;
   samples.insert(samples.begin(), cto, 0);
 
   Channel channel{snr, pi * cfo};
