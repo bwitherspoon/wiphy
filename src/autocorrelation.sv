@@ -19,29 +19,29 @@ module autocorrelation #(
   input  logic               m_ready,
   output logic [4*WIDTH-1:0] m_data
 );
-  function logic [31:0] conj(input logic [31:0] z);
-    return {-$signed(z[31:16]), z[15:0]};
-  endfunction
-
   logic [1:0] sample_valid;
   logic [1:0] sample_ready;
   logic [2*WIDTH-1:0] sample_data;
-
-  logic delayed_valid;
-  logic delayed_ready;
-  logic [2*WIDTH-1:0] delayed_data;
 
   logic current_valid;
   logic current_ready;
   logic [2*WIDTH-1:0] current_data;
 
+  logic delayed_valid;
+  logic delayed_ready;
+  logic [2*WIDTH-1:0] delayed_data;
+
+  logic conjugated_valid;
+  logic conjugated_ready;
+  logic [2*WIDTH-1:0] conjugated_data;
+
   logic combined_valid;
   logic combined_ready;
   logic [4*WIDTH-1:0] combined_data;
 
-  logic conjprod_valid;
-  logic conjprod_ready;
-  logic [4*WIDTH-1:0] conjprod_data;
+  logic product_valid;
+  logic product_ready;
+  logic [4*WIDTH-1:0] product_data;
 
   logic autocorr_ready;
   logic autocorr_valid;
@@ -80,34 +80,45 @@ module autocorrelation #(
     .m_data(delayed_data)
   );
 
+  complex_conjugate #(.WIDTH(WIDTH)) conj (
+    .clk,
+    .reset,
+    .s_valid(delayed_valid),
+    .s_ready(delayed_ready),
+    .s_data(delayed_data),
+    .m_valid(conjugated_valid),
+    .m_ready(conjugated_ready),
+    .m_data(conjugated_data)
+  );
+
   combine #(.WIDTH(2*WIDTH), .COUNT(2)) combo (
     .clk,
     .reset,
-    .s_valid({current_valid, delayed_valid}),
-    .s_ready({current_ready, delayed_ready}),
-    .s_data({current_data, conj(delayed_data)}),
+    .s_valid({current_valid, conjugated_valid}),
+    .s_ready({current_ready, conjugated_ready}),
+    .s_data({current_data, conjugated_data}),
     .m_valid(combined_valid),
     .m_ready(combined_ready),
     .m_data(combined_data)
   );
 
-  complex_multiply #(.WIDTH(WIDTH)) conjmult (
+  complex_multiply #(.WIDTH(WIDTH)) cmult (
     .clk,
     .reset,
     .s_valid(combined_valid),
     .s_ready(combined_ready),
     .s_data(combined_data),
-    .m_valid(conjprod_valid),
-    .m_ready(conjprod_ready),
-    .m_data(conjprod_data)
+    .m_valid(product_valid),
+    .m_ready(product_ready),
+    .m_data(product_data)
   );
 
   complex_moving_sumation #(.WIDTH(2*WIDTH), .LENGTH(LENGTH)) sumation (
     .clk,
     .reset,
-    .s_valid(conjprod_valid),
-    .s_ready(conjprod_ready),
-    .s_data(conjprod_data),
+    .s_valid(product_valid),
+    .s_ready(product_ready),
+    .s_data(product_data),
     .m_valid(autocorr_valid),
     .m_ready(autocorr_ready),
     .m_data(autocorr_data)

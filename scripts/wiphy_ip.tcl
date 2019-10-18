@@ -12,6 +12,7 @@ import_files -force -norecurse -flat -fileset sources_1 [list \
   "$src_dir/broadcast.sv" \
   "$src_dir/cartesian_to_polar.sv" \
   "$src_dir/combine.sv" \
+  "$src_dir/complex_conjugate.sv" \
   "$src_dir/complex_magnitude_squared.sv" \
   "$src_dir/complex_moving_sumation.sv" \
   "$src_dir/complex_multiply.sv" \

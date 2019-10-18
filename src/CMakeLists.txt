@@ -5,6 +5,7 @@ set(WIPHY_SOURCES
   ${CMAKE_CURRENT_SOURCE_DIR}/broadcast.sv
   ${CMAKE_CURRENT_SOURCE_DIR}/cartesian_to_polar.sv
   ${CMAKE_CURRENT_SOURCE_DIR}/combine.sv
+  ${CMAKE_CURRENT_SOURCE_DIR}/complex_conjugate.sv
   ${CMAKE_CURRENT_SOURCE_DIR}/complex_magnitude_squared.sv
   ${CMAKE_CURRENT_SOURCE_DIR}/complex_moving_sumation.sv
   ${CMAKE_CURRENT_SOURCE_DIR}/complex_multiply.sv
