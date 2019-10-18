@@ -30,7 +30,6 @@ module saturate #(
 
     always_comb begin
       if (|s_data[S_WIDTH-1:M_WIDTH-1] & ~&s_data[S_WIDTH-1:M_WIDTH-1]) begin
-        assert (0);
         data = s_data[S_WIDTH-1] ? MIN : MAX;
       end else begin
         data = s_data[M_WIDTH-1:0];
