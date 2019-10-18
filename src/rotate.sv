@@ -4,7 +4,7 @@
 
 module rotate #(
   parameter int WIDTH = 16,
-  parameter int DEPTH = 16
+  parameter int STAGES = 16
 )(
   input  logic               clk,
   input  logic               reset,
@@ -28,41 +28,41 @@ module rotate #(
 
   localparam PI = arg_t'(1) << (2 * WIDTH - 1);
   localparam PI_2 = PI >> 1;
+  localparam PI_R = 3.1415926;
 
-  arg_t phi [DEPTH];
+  arg_t phi [STAGES];
 
   initial begin
     for (int n = 0; n < $size(phi); n++) begin
-      phi[n] = arg_t'($atan($pow(2, $itor(-(n + 1)))) * $pow(2, $bits(arg_t) - 1) / 3.1415926);
+      phi[n] = arg_t'($atan($pow(2, $itor(-(n + 1)))) * $pow(2, $bits(arg_t) - 1) / PI_R);
     end
   end
 
-  logic [DEPTH-1:0] en = '0;
+  logic [STAGES:0] valid = '0;
 
   always_ff @(posedge clk) begin
     if (reset) begin
-      m_valid <= 0;
-      en <= '0;
+      valid <= '0;
     end else if (!m_valid || m_ready) begin
-      {m_valid, en} <= {en[$bits(en)-1:0], s_valid};
+      valid <= {valid[$bits(valid)-2:0], s_valid};
     end
   end
 
-  logic [DEPTH:0] last = '0;
+  assign m_valid = valid[$bits(valid)-1];
+
+  logic [STAGES:0] last = '0;
 
   always_ff @(posedge clk) begin
-    if (reset) begin
-      last <= '0;
-    end else if (!m_valid || m_ready) begin
+    if (!m_valid || m_ready) begin
       last <= {last[$bits(last)-2:0], s_last};
     end
   end
 
   assign m_last = last[$bits(last)-1];
 
-  acc_t re [DEPTH + 1];
-  acc_t im [DEPTH + 1];
-  arg_t ph [DEPTH + 1];
+  acc_t re [STAGES + 1];
+  acc_t im [STAGES + 1];
+  arg_t ph [STAGES + 1];
 
   wire signed [WIDTH-1:0] i = s_data[WIDTH-1:0];
   wire signed [WIDTH-1:0] q = s_data[2*WIDTH-1-:WIDTH];
@@ -96,7 +96,7 @@ module rotate #(
   end
 
   genvar n;
-  for (n = 1; n < DEPTH + 1; n = n + 1) begin
+  for (n = 1; n < STAGES + 1; n = n + 1) begin
     always_ff @(posedge clk) begin
       if (m_ready) begin
         if (ph[n - 1][$bits(ph[n - 1]) - 1]) begin
