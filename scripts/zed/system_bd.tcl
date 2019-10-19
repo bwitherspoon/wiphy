@@ -147,18 +147,15 @@ ad_cpu_interconnect 0x41620000 axi_iic_fmc
 
 source $ad_hdl_dir/projects/fmcomms2/common/fmcomms2_bd.tcl
 
-# wiphy connectins
+# wiphy connections
 
-ad_connect axi_ad9361/clk wiphy/clk
-ad_connect axi_ad9361/rst wiphy/reset
-ad_connect axi_ad9361/adc_valid_i0 wiphy/adc_valid_i0
-ad_connect axi_ad9361/adc_data_i0 wiphy/adc_data_i0
-ad_connect axi_ad9361/adc_valid_q0 wiphy/adc_valid_q0
-ad_connect axi_ad9361/adc_data_q0 wiphy/adc_data_q0
-ad_connect axi_ad9361/adc_valid_i1 wiphy/adc_valid_i1
-ad_connect axi_ad9361/adc_data_i1 wiphy/adc_data_i1
-ad_connect axi_ad9361/adc_valid_q1 wiphy/adc_valid_q1
-ad_connect axi_ad9361/adc_data_q1 wiphy/adc_data_q1
+ad_connect util_ad9361_divclk/clk_out wiphy/clk
+ad_connect util_ad9361_divclk_reset/peripheral_reset wiphy/reset
+ad_connect util_ad9361_adc_fifo/dout_valid_0 wiphy/adc_valid_i0
+ad_connect util_ad9361_adc_fifo/dout_data_0 wiphy/adc_data_i0
+ad_connect util_ad9361_adc_fifo/dout_data_1 wiphy/adc_data_q0
+ad_connect util_ad9361_adc_fifo/dout_data_2 wiphy/adc_data_i1
+ad_connect util_ad9361_adc_fifo/dout_data_3 wiphy/adc_data_q1
 ad_cpu_interrupt ps-10 mb-10 wiphy/irq
 
 ad_ip_parameter axi_sysid_0 CONFIG.ROM_ADDR_BITS 9
