@@ -16,7 +16,6 @@ adi_project wiphy_zed
 adi_project_files wiphy_zed [list \
   "$src_dir/zed/system_top.v" \
   "$src_dir/zed/system_constr.xdc" \
-  "$src_dir/zed/zed_system_constr.xdc" \
   "$ad_hdl_dir/library/xilinx/common/ad_iobuf.v" \
  ]
 
