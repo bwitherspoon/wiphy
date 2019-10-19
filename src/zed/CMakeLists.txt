@@ -5,6 +5,7 @@ add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/zed/wiphy_zed.xpr
   COMMAND ${CMAKE_COMMAND} -E copy_if_different
       ${CMAKE_SOURCE_DIR}/scripts/zed/system_project.tcl
       ${CMAKE_SOURCE_DIR}/scripts/zed/system_bd.tcl
+      ${CMAKE_SOURCE_DIR}/scripts/zed/zed_system_bd.tcl
       ${CMAKE_BINARY_DIR}/zed
   COMMAND ${XILINX_VIVADO}/vivado -mode batch -nojournal
       -source ${CMAKE_SOURCE_DIR}/scripts/zed/system_project.tcl
@@ -15,6 +16,7 @@ add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/zed/wiphy_zed.xpr
     ${CMAKE_SOURCE_DIR}/scripts/zed/system_bd.tcl
     system_constr.xdc
     system_top.v
+    zed_system_constr.xdc
     ${WIPHY_SOURCES}
 )
 

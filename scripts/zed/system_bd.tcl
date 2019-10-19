@@ -5,7 +5,7 @@ lappend lib_dirs $ip_dir
 set_property ip_repo_paths $lib_dirs [current_fileset]
 update_ip_catalog
 
-source $ad_hdl_dir/projects/common/zed/zed_system_bd.tcl
+source zed_system_bd.tcl
 source $ad_hdl_dir/projects/fmcomms2/common/fmcomms2_bd.tcl
 
 ad_ip_instance wiphy wiphy
