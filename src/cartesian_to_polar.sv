@@ -29,7 +29,7 @@ module cartesian_to_polar #(
 
   initial begin
     for (int n = 0; n < $size(lut); n++) begin
-      lut[n] = data_t'($atan($pow(2, $itor(-n))) * $pow(2, $bits(data_t) - 1) / 3.1415926);
+      lut[n] = data_t'($atan($pow(2, real'(-n))) * $pow(2, $bits(data_t) - 1) / 3.1415926);
     end
   end
 
