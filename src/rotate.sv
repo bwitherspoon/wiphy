@@ -34,7 +34,7 @@ module rotate #(
 
   initial begin
     for (int n = 0; n < $size(phi); n++) begin
-      phi[n] = arg_t'($atan($pow(2, $itor(-(n + 1)))) * $pow(2, $bits(arg_t) - 1) / PI_R);
+      phi[n] = arg_t'($atan($pow(2, real'(-(n + 1)))) * $pow(2, $bits(arg_t) - 1) / PI_R);
     end
   end
 
