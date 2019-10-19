@@ -110,15 +110,6 @@ ad_connect spi0_sdo_i sys_ps7/SPI0_MOSI_I
 ad_connect spi0_sdo_o sys_ps7/SPI0_MOSI_O
 ad_connect spi0_sdi_i sys_ps7/SPI0_MISO_I
 
-# system id
-
-ad_ip_instance axi_sysid axi_sysid_0
-ad_ip_instance sysid_rom rom_sys_0
-
-ad_connect axi_sysid_0/rom_addr rom_sys_0/rom_addr
-ad_connect axi_sysid_0/sys_rom_data rom_sys_0/rom_data
-ad_connect sys_cpu_clk rom_sys_0/clk
-
 # interrupts
 
 ad_connect sys_concat_intc/dout sys_ps7/IRQ_F2P
@@ -142,7 +133,6 @@ ad_connect sys_concat_intc/In0  GND
 # interconnects and address mapping
 
 ad_cpu_interconnect 0x47000000 wiphy
-ad_cpu_interconnect 0x45000000 axi_sysid_0
 ad_cpu_interconnect 0x41620000 axi_iic_fmc
 
 source $ad_hdl_dir/projects/fmcomms2/common/fmcomms2_bd.tcl
@@ -157,12 +147,6 @@ ad_connect util_ad9361_adc_fifo/dout_data_1 wiphy/adc_data_q0
 ad_connect util_ad9361_adc_fifo/dout_data_2 wiphy/adc_data_i1
 ad_connect util_ad9361_adc_fifo/dout_data_3 wiphy/adc_data_q1
 ad_cpu_interrupt ps-10 mb-10 wiphy/irq
-
-ad_ip_parameter axi_sysid_0 CONFIG.ROM_ADDR_BITS 9
-ad_ip_parameter rom_sys_0 CONFIG.PATH_TO_FILE "[pwd]/mem_init_sys.txt"
-ad_ip_parameter rom_sys_0 CONFIG.ROM_ADDR_BITS 9
-set sys_cstring "WiPHY ZedBoard"
-sysid_gen_sys_init_file $sys_cstring
 
 ad_ip_parameter axi_ad9361 CONFIG.ADC_INIT_DELAY 23
 ad_ip_parameter axi_ad9361 CONFIG.DAC_DDS_DISABLE 1
