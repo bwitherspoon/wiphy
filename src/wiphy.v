@@ -43,22 +43,17 @@ module wiphy (
   output wire [31:0] m_axis_tdata,
   input wire m_axis_tready,
 
-  input wire dac_valid_i0,
+  input wire dac_valid,
+  output wire dac_ready,
   output wire [15:0] dac_data_i0,
-  input wire dac_valid_q0,
   output wire [15:0] dac_data_q0,
-  input wire dac_valid_i1,
   output wire [15:0] dac_data_i1,
-  input wire dac_valid_q1,
   output wire [15:0] dac_data_q1,
 
-  input wire adc_valid_i0,
+  input wire adc_valid,
   input wire [15:0] adc_data_i0,
-  input wire adc_valid_q0,
   input wire [15:0] adc_data_q0,
-  input wire adc_valid_i1,
   input wire [15:0] adc_data_i1,
-  input wire adc_valid_q1,
   input wire [15:0] adc_data_q1,
 
   output wire irq
@@ -96,7 +91,7 @@ module wiphy (
   synchronization sync (
     .clk(clk),
     .reset(reset),
-    .adc_valid(adc_valid_i0),
+    .adc_valid(adc_valid),
     .adc_data({adc_data_q0, adc_data_i0}),
     .m_valid(sync_valid),
     .m_ready(sync_ready),

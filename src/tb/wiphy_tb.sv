@@ -56,22 +56,17 @@ module wiphy_tb;
   logic [31:0] m_axis_tdata;
   logic m_axis_tready;
 
-  logic dac_valid_i0;
+  logic dac_valid;
+  logic dac_ready;
   logic [15:0] dac_data_i0;
-  logic dac_valid_q0;
   logic [15:0] dac_data_q0;
-  logic dac_valid_i1;
   logic [15:0] dac_data_i1;
-  logic dac_valid_q1;
   logic [15:0] dac_data_q1;
 
-  logic adc_valid_i0;
+  logic adc_valid;
   logic [15:0] adc_data_i0;
-  logic adc_valid_q0;
   logic [15:0] adc_data_q0;
-  logic adc_valid_i1;
   logic [15:0] adc_data_i1;
-  logic adc_valid_q1;
   logic [15:0] adc_data_q1;
 
   logic irq;

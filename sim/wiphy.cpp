@@ -34,15 +34,9 @@ Wiphy::Wiphy() : core_{std::make_unique<Vwiphy>()} {
   core_->s_axi_arvalid = 0;
   core_->s_axi_rready = 1;
 
-  core_->dac_valid_i0 = 0;
-  core_->dac_valid_q0 = 0;
-  core_->dac_valid_i1 = 0;
-  core_->dac_valid_q1 = 0;
+  core_->dac_valid = 0;
 
-  core_->adc_valid_i0 = 0;
-  core_->adc_valid_q0 = 0;
-  core_->adc_valid_i1 = 0;
-  core_->adc_valid_q1 = 0;
+  core_->adc_valid = 0;
 
   core_->eval();
 }
@@ -100,15 +94,13 @@ void Wiphy::reset(int count) {
 void Wiphy::receive(const std::complex<float> &sample) {
   const auto fixed = float_to_fixed<std::int16_t, 11>(sample);
 
-  core_->adc_valid_i0 = 1;
-  core_->adc_valid_q0 = 1;
+  core_->adc_valid = 1;
   core_->adc_data_i0 = fixed.real();
   core_->adc_data_q0 = fixed.imag();
 
   cycle();
 
-  core_->adc_valid_i0 = 0;
-  core_->adc_valid_q0 = 0;
+  core_->adc_valid = 0;
 }
 
 bool Wiphy::interrupt() const {

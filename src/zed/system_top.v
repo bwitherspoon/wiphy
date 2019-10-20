@@ -30,6 +30,9 @@ module system_top (
 
   inout  wire [31:0] gpio_bd,
 
+  inout  wire        iic_scl,
+  inout  wire        iic_sda,
+
   input  wire        otg_vbusoc,
 
   input  wire        rx_clk_in_p,
@@ -106,6 +109,8 @@ module system_top (
     .gpio_i(gpio_i),
     .gpio_o(gpio_o),
     .gpio_t(gpio_t),
+    .iic_fmc_scl_io(iic_scl),
+    .iic_fmc_sda_io(iic_sda),
     .otg_vbusoc(otg_vbusoc),
     .rx_clk_in_n(rx_clk_in_n),
     .rx_clk_in_p(rx_clk_in_p),
@@ -113,9 +118,6 @@ module system_top (
     .rx_data_in_p(rx_data_in_p),
     .rx_frame_in_n(rx_frame_in_n),
     .rx_frame_in_p(rx_frame_in_p),
-    .tdd_sync_i(1'b0),
-    .tdd_sync_o(),
-    .tdd_sync_t(),
     .spi0_clk_i(1'b0),
     .spi0_clk_o(spi_clk),
     .spi0_csn_0_o(spi_csn),
