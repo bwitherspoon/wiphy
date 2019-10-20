@@ -5,7 +5,7 @@ find_package(verilator HINTS $ENV{VERILATOR_ROOT})
 
 add_compile_options($<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:-Wall>)
 
-add_library(wiphy OBJECT cordic.cpp preamble.cpp)
+add_library(wiphy OBJECT cordic.cpp preamble.cpp transform.cpp)
 target_compile_features(wiphy PUBLIC cxx_std_17)
 target_include_directories(wiphy PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
