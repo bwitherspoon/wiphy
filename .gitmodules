@@ -1,0 +1,3 @@
+[submodule "ip/adi"]
+	path = ip/adi
+	url = https://github.com/analogdevicesinc/hdl.git
