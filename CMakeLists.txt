@@ -8,6 +8,8 @@ endif()
 
 project(WiPHY CXX)
 
+enable_testing()
+
 set(XILINX_VIVADO /opt/Xilinx/Vivado/2018.3/bin)
 
 add_subdirectory(src)
