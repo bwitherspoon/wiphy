@@ -10,4 +10,5 @@ function(unittest TARGET)
 endfunction()
 
 unittest(cordic_test)
+unittest(synchronization_test)
 unittest(transform_test)
