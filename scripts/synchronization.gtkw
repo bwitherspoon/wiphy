@@ -1,0 +1,71 @@
+[*]
+[*] GTKWave Analyzer v3.3.101 (w)1999-2019 BSI
+[*] Mon Oct 21 16:54:37 2019
+[*]
+[dumpfile] "/home/spoonb/repositories/wiphy/wiphy.fst"
+[dumpfile_mtime] "Mon Oct 21 16:46:11 2019"
+[dumpfile_size] 424083
+[savefile] "/home/spoonb/repositories/wiphy/scripts/synchronization.gtkw"
+[timestart] 0
+[size] 1920 1043
+[pos] -1959 -66
+*-10.000000 0 2615 2935 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[markername] AL-STS
+[markername] BL-LTS
+[treeopen] TOP.
+[treeopen] TOP.wiphy.
+[treeopen] TOP.wiphy.freq.cordic.
+[treeopen] TOP.wiphy.sync.
+[sst_width] 228
+[signals_width] 300
+[sst_expanded] 1
+[sst_vpaned_height] 618
+@28
+TOP.wiphy.sync.clk
+TOP.wiphy.reset
+TOP.wiphy.irq
+@200
+-
+@40010420
+[color] 5
+[fpshift_count] 30
+TOP.wiphy.sync.frequency[31:0]
+@20000
+-
+-
+-
+-
+@10420
+[color] 6
+TOP.wiphy.sync.magnitude[31:0]
+@20000
+-
+-
+-
+-
+@10420
+[color] 7
+TOP.wiphy.sync.energy[31:0]
+@20000
+-
+-
+-
+-
+@10420
+[color] 2
+TOP.wiphy.sync.inphase[15:0]
+@20000
+-
+-
+-
+-
+@10421
+[color] 1
+TOP.wiphy.sync.quadrature[15:0]
+@20000
+-
+-
+-
+-
+[pattern_trace] 1
+[pattern_trace] 0
