@@ -56,16 +56,14 @@ module complex_multiply_compact #(
   end
 
   always_ff @(posedge clk) begin
-    a_real[1] <= a_real[0];
-    a_imag[1] <= a_imag[0];
-    a_real[2] <= a_real[1];
-    a_imag[2] <= a_imag[1];
+    for (int i = 1; i < 3; i++) begin
+      a_real[i] <= a_real[i-1];
+      a_imag[i] <= a_imag[i-1];
+      b_real[i] <= b_real[i-1];
+      b_imag[i] <= b_imag[i-1];
+    end
     a_real[3] <= a_real[2];
     a_imag[3] <= a_imag[2];
-    b_real[1] <= b_real[0];
-    b_real[2] <= b_real[1];
-    b_imag[1] <= b_imag[0];
-    b_imag[2] <= b_imag[1];
   end
 
   always_ff @(posedge clk) begin
