@@ -2,10 +2,10 @@
  * Copyright 2019-2020 Brett Witherspoon
  */
 
-module complex_multiply_compact_tb;
-  timeunit 1ns;
-  timeprecision 1ps;
+timeunit 1ns;
+timeprecision 1ps;
 
+module complex_multiply_compact_tb;
   localparam int N = 256;
 
   logic clk = 0;
@@ -23,7 +23,7 @@ module complex_multiply_compact_tb;
 
   logic m_valid;
   logic m_ready = 0;
-  logic [63:0] m_data;
+  logic [1:0][32:0] m_data;
 
   complex_multiply_compact #(.WIDTH(16)) dut (.*);
 
@@ -47,11 +47,11 @@ module complex_multiply_compact_tb;
     m_ready = 1;
     for (int i = 0; i < N; i++) begin
       do @(posedge clk); while (m_valid !== 1);
-      assert($signed(m_data[63:32]) === i * i / 2) else begin
-        $fatal(0, "%0d != %0d", $signed(m_data[63:32]), i * i / 2);
+      assert($signed(m_data[1]) === i * i) else begin
+        $fatal(0, "%0d != %0d", $signed(m_data[1]), i * i);
       end
-      assert($signed(m_data[31:0]) === 0) else begin
-        $fatal(0, "%0d != %0d", $signed(m_data[31:0]), 0);
+      assert($signed(m_data[0]) === 0) else begin
+        $fatal(0, "%0d != %0d", $signed(m_data[0]), 0);
       end
     end
 

@@ -6,21 +6,21 @@ module complex_multiply_compact #(
   parameter int WIDTH = 16,
   parameter bit RESET = 0
 )(
-  input  logic               clk,
-  input  logic               reset,
+  input  logic                    clk,
+  input  logic                    reset,
 
-  input  logic               s_valid,
-  output logic               s_ready,
-  input  logic [4*WIDTH-1:0] s_data,
+  input  logic                    s_valid,
+  output logic                    s_ready,
+  input  logic [1:0][2*WIDTH-1:0] s_data,
 
-  output logic               m_valid,
-  input  logic               m_ready,
-  output logic [4*WIDTH-1:0] m_data
+  output logic                    m_valid,
+  input  logic                    m_ready,
+  output logic [1:0][2*WIDTH:0]   m_data
 );
   localparam int DELAY = 6;
 
   typedef logic signed [WIDTH-1:0] data_t;
-  typedef logic signed [WIDTH:0] wide_t;
+  typedef logic signed [WIDTH:0] plus_t;
   typedef logic signed [2*WIDTH-1:0] mult_t;
   typedef logic signed [2*WIDTH:0] accu_t;
 
@@ -30,17 +30,17 @@ module complex_multiply_compact #(
   data_t b_real [3];
   data_t b_imag [3];
 
-  wide_t a_real_minus_a_imag;
+  plus_t a_real_minus_a_imag;
 
   accu_t a_real_minus_a_imag_x_b_imag;
 
   accu_t common [3];
 
-  wide_t b_real_minus_b_imag;
+  plus_t b_real_minus_b_imag;
 
   accu_t b_real_minus_b_imag_x_a_real;
 
-  wide_t b_real_plus_b_imag;
+  plus_t b_real_plus_b_imag;
 
   accu_t b_real_plus_b_imag_x_a_imag;
 
@@ -51,7 +51,8 @@ module complex_multiply_compact #(
 
   always_ff @(posedge clk) begin
     if (s_valid && s_ready) begin
-      {b_imag[0], b_real[0], a_imag[0], a_real[0]} <= s_data;
+      {a_imag[0], a_real[0]} <= s_data[0];
+      {b_imag[0], b_real[0]} <= s_data[1];
     end
   end
 
@@ -91,7 +92,8 @@ module complex_multiply_compact #(
 
   always_ff @(posedge clk) begin
     if (!m_valid || m_ready) begin
-      m_data <= {p_imag[2*WIDTH:1], p_real[2*WIDTH:1]};
+      m_data[0] <= p_real;
+      m_data[1] <= p_imag;
     end
   end
 
@@ -106,7 +108,5 @@ module complex_multiply_compact #(
   assign m_valid = valid[$bits(valid)-1];
 
   assign s_ready = m_ready;
-
-  wire unused = &{1'b0, p_real[0], p_imag[0]};
 
 endmodule
