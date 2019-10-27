@@ -1,0 +1,50 @@
+[*]
+[*] GTKWave Analyzer v3.3.101 (w)1999-2019 BSI
+[*] Sun Oct 27 23:45:03 2019
+[*]
+[dumpfile] "/home/spoonb/repositories/wiphy/build/src/tb/transform_stage.fst"
+[dumpfile_mtime] "Sun Oct 27 23:38:39 2019"
+[dumpfile_size] 2613
+[savefile] "/home/spoonb/repositories/wiphy/scripts/transform_stage.gtkw"
+[timestart] 0
+[size] 1920 1016
+[pos] -1 -1
+*-16.000000 0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] transform_stage_tb.
+[treeopen] transform_stage_tb.dut.
+[sst_width] 228
+[signals_width] 277
+[sst_expanded] 1
+[sst_vpaned_height] 274
+@29
+transform_stage_tb.dut.clk
+@28
+transform_stage_tb.dut.reset
+@200
+-
+@28
+transform_stage_tb.dut.s_valid
+transform_stage_tb.dut.s_ready
+@22
+transform_stage_tb.dut.s_data[31:0]
+@200
+-
+@420
+transform_stage_tb.dut.butterfly.a_real[15:0]
+transform_stage_tb.dut.butterfly.a_imag[15:0]
+transform_stage_tb.dut.butterfly.b_real[15:0]
+transform_stage_tb.dut.butterfly.b_imag[15:0]
+@40000420
+[fpshift_count] 15
+transform_stage_tb.dut.butterfly.c_real[15:0]
+[fpshift_count] 15
+transform_stage_tb.dut.butterfly.c_imag[15:0]
+@200
+-
+@28
+transform_stage_tb.dut.m_valid
+transform_stage_tb.dut.m_ready
+@22
+transform_stage_tb.dut.m_data[33:0]
+[pattern_trace] 1
+[pattern_trace] 0

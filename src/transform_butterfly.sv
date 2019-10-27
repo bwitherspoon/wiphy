@@ -52,9 +52,9 @@ module transform_butterfly #(
 
   always_ff @(posedge clk) begin
     if (s_valid && s_ready) begin
-      {a_real, a_imag} <= s_data[0];
-      {b_real, b_imag} <= s_data[1];
-      {c_real, c_imag} <= s_data[2];
+      {a_imag, a_real} <= s_data[0];
+      {b_imag, b_real} <= s_data[1];
+      {c_imag, c_real} <= s_data[2];
     end
   end
 
