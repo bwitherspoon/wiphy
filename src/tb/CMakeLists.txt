@@ -12,4 +12,5 @@ testbench(complex_magnitude_squared_tb ${CMAKE_CURRENT_SOURCE_DIR}/complex_magni
 testbench(complex_multiply_tb ${CMAKE_CURRENT_SOURCE_DIR}/complex_multiply_tb.sv)
 testbench(complex_multiply_compact_tb ${CMAKE_CURRENT_SOURCE_DIR}/complex_multiply_compact_tb.sv)
 testbench(rotate_tb ${CMAKE_CURRENT_SOURCE_DIR}/rotate_tb.sv)
+testbench(transform_butterfly_tb ${CMAKE_CURRENT_SOURCE_DIR}/transform_butterfly_tb.sv)
 testbench(wiphy_tb ${CMAKE_CURRENT_SOURCE_DIR}/wiphy_tb.sv)
