@@ -13,5 +13,6 @@ testbench(complex_multiply_tb ${CMAKE_CURRENT_SOURCE_DIR}/complex_multiply_tb.sv
 testbench(complex_multiply_compact_tb ${CMAKE_CURRENT_SOURCE_DIR}/complex_multiply_compact_tb.sv)
 testbench(rotate_tb ${CMAKE_CURRENT_SOURCE_DIR}/rotate_tb.sv)
 testbench(transform_butterfly_tb ${CMAKE_CURRENT_SOURCE_DIR}/transform_butterfly_tb.sv)
+testbench(transform_primary_tb ${CMAKE_CURRENT_SOURCE_DIR}/transform_primary_tb.sv)
 testbench(transform_stage_tb ${CMAKE_CURRENT_SOURCE_DIR}/transform_stage_tb.sv)
 testbench(wiphy_tb ${CMAKE_CURRENT_SOURCE_DIR}/wiphy_tb.sv)
