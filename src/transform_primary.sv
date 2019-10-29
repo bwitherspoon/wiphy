@@ -39,28 +39,36 @@ module transform_primary #(
     end else if (state) begin
       m_valid <= s_valid;
     end else begin
-
+      // m_valid <= s_valid;
     end
   end
 
   always_ff @ (posedge clk) begin
     if (reset) begin
       state <= 0;
+    end else if (state) begin
+      if ((m_valid && m_ready) && !(s_valid && s_ready)) begin
+        state <= 0;
+      end
+    end else begin
+      if ((s_valid && s_ready) && !(m_valid && !m_ready)) begin
+        state <= 1;
+      end
     end
   end
 
   always_ff @(posedge clk) begin
     if (!m_valid || m_ready) begin
       if (state) begin
-        r_real = a_real - i_real;
-        r_imag = a_imag - i_imag;
-        o_real = a_real + i_real;
-        o_imag = a_imag + i_imag;
+        r_real <= a_real - i_real;
+        r_imag <= a_imag - i_imag;
+        o_real <= a_real + i_real;
+        o_imag <= a_imag + i_imag;
       end else begin
-        a_real = i_real;
-        a_imag = i_imag;
-        o_real = r_real;
-        o_imag = r_imag;
+        a_real <= i_real;
+        a_imag <= i_imag;
+        o_real <= r_real;
+        o_imag <= r_imag;
       end
     end
   end
