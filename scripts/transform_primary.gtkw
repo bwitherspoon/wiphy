@@ -1,0 +1,73 @@
+[*]
+[*] GTKWave Analyzer v3.3.101 (w)1999-2019 BSI
+[*] Tue Nov 19 19:57:54 2019
+[*]
+[dumpfile] "/home/spoonb/repositories/wiphy/build/src/tb/transform_primary.fst"
+[dumpfile_mtime] "Tue Nov 19 19:55:10 2019"
+[dumpfile_size] 1090
+[savefile] "/home/spoonb/repositories/wiphy/scripts/transform_primary.gtkw"
+[timestart] 0
+[size] 1920 1016
+[pos] -1 -1
+*-15.000000 45000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] transform_primary_tb.
+[sst_width] 228
+[signals_width] 126
+[sst_expanded] 1
+[sst_vpaned_height] 285
+@28
+transform_primary_tb.dut.clk
+transform_primary_tb.dut.reset
+@200
+-
+@28
+transform_primary_tb.dut.i_state[1:0]
+@200
+-
+@28
+transform_primary_tb.dut.s_valid
+transform_primary_tb.dut.s_ready
+@22
+transform_primary_tb.dut.s_data[31:0]
+@200
+-
+-
+@22
+transform_primary_tb.dut.a_real[16:0]
+transform_primary_tb.dut.a_imag[16:0]
+transform_primary_tb.dut.b_real[16:0]
+transform_primary_tb.dut.b_imag[16:0]
+@200
+-
+@22
+transform_primary_tb.dut.c_real[16:0]
+transform_primary_tb.dut.c_imag[16:0]
+transform_primary_tb.dut.d_real[16:0]
+transform_primary_tb.dut.d_imag[16:0]
+@200
+-
+@22
+transform_primary_tb.dut.e_real[16:0]
+transform_primary_tb.dut.e_imag[16:0]
+transform_primary_tb.dut.f_real[16:0]
+transform_primary_tb.dut.f_imag[16:0]
+@200
+-
+@28
+transform_primary_tb.dut.o_state
+@200
+-
+@22
+transform_primary_tb.dut.o_real[16:0]
+transform_primary_tb.dut.o_imag[16:0]
+@200
+-
+@28
+transform_primary_tb.dut.m_valid
+transform_primary_tb.dut.m_ready
+@22
+transform_primary_tb.dut.m_data[33:0]
+@200
+-
+[pattern_trace] 1
+[pattern_trace] 0
