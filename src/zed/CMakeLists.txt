@@ -1,4 +1,4 @@
-# Copyright 2019 Brett Witherspoon
+# Copyright 2019-2020 Brett Witherspoon
 
 add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/zed/wiphy_zed.xpr
   WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/zed

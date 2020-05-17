@@ -1,4 +1,4 @@
-# Copyright 2019 Brett Witherspoon
+# Copyright 2019-2020 Brett Witherspoon
 
 set(WIPHY_SOURCES
   ${CMAKE_CURRENT_SOURCE_DIR}/autocorrelation.sv

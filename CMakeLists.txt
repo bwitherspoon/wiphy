@@ -1,4 +1,4 @@
-# Copyright 2019 Brett Witherspoon
+# Copyright 2019-2020 Brett Witherspoon
 
 cmake_minimum_required(VERSION 3.8)
 

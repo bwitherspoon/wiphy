@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Brett Witherspoon
+ * Copyright 2019-2020 Brett Witherspoon
  */
 
 #define BOOST_TEST_MODULE CordicTestModule

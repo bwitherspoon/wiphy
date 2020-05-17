@@ -1,4 +1,4 @@
-# Copyright 2019 Brett Witherspoon
+# Copyright 2019-2020 Brett Witherspoon
 
 find_package(Boost REQUIRED COMPONENTS program_options unit_test_framework)
 find_package(verilator HINTS $ENV{VERILATOR_ROOT})

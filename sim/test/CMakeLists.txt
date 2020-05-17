@@ -1,4 +1,4 @@
-# Copyright 2019 Brett Witherspoon
+# Copyright 2019-2020 Brett Witherspoon
 
 function(unittest TARGET)
   add_executable(${TARGET} ${TARGET}.cpp $<TARGET_OBJECTS:wiphy>)
